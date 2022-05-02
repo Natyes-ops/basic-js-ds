@@ -7,8 +7,8 @@ const { NotImplementedError } = require('../extensions/index.js');
 * using Node from extensions
 */
 class Node {
-  constructor(value) {
-    this.value = value;
+  constructor(data) {
+    this.data = data;
     this.left = null;
     this.right = null;
   }
@@ -21,81 +21,81 @@ class BinarySearchTree {
     return this.rootTree;
   }
 
-  add(value) {
-    this.rootTree = addNode(this.rootTree, value);
+  add(data) {
+    this.rootTree = addNode(this.rootTree, data);
 
-    function addNode(node, value) {
+    function addNode(node, data) {
       if (!node) {
-        return new Node(value);
+        return new Node(data);
       }
 
-      if (node.value === value) {
+      if (node.data === data) {
         return node;
       }
 
-      if (value < node.value) {
-        node.left = addNode(node.left, value);
+      if (data < node.data) {
+        node.left = addNode(node.left, data);
       } else {
-        node.right = addNode(node.right, value);
+        node.right = addNode(node.right, data);
       }
 
       return node;
     }
   }
 
-  has(value) {
-    return search(this.rootTree, value);
+  has(data) {
+    return search(this.rootTree, data);
 
-    function search(node, value) {
+    function search(node, data) {
       if (!node) {
         return false;
       }
 
-      if (node.value === value) {
+      if (node.data === data) {
         return true;
       }
 
-      if (value < node.value) {
-        return search(node.left, value);
+      if (data < node.data) {
+        return search(node.left, data);
       } else {
-        return search(node.right, value);
+        return search(node.right, data);
       }
     }
   }
 
-  find(value) {
-    return searchNode(this.rootTree, value);
+  find(data) {
+    return searchNode(this.rootTree, data);
 
-    function searchNode(node, value) {
+    function searchNode(node, data) {
       if (!node) {
         return null;
       }
 
-      if (node.value === value) {
+      if (node.data === data) {
         return node;
       }
 
-      if (value < node.value) {
-        return searchNode(node.left, value);
+      if (data < node.data) {
+        return searchNode(node.left, data);
       } else {
-        return searchNode(node.right, value);
+        return searchNode(node.right, data);
       }
     }
   }
 
-  remove(value) {
-    this.rootTree = removeNode(this.rootTree, value);
+  remove(data) {
+    this.rootTree = removeNode(this.rootTree, data);
 
-    function removeNode(node, value) {
+    function removeNode(node, data) {
       if (!node) {
         return null;
       }
 
-      if (value < node.value) {
-        node.left = removeNode(node.left, value);
+      if (data < node.data) {
+        node.left = removeNode(node.left, data);
         return node;
-      } else if (value > node.value) {
-        node.right = removeNode(node.right, value);
+      } else if (data > node.data) {
+        node.right = removeNode(node.right, data);
         return node;
       } else {
           // проверка на лист
@@ -119,9 +119,9 @@ class BinarySearchTree {
           minChildren = minChildren.left;
         }
 
-        node.value = minChildren.value;
+        node.data = minChildren.data;
 
-        node.right = removeNode(node.right, minChildren.value);
+        node.right = removeNode(node.right, minChildren.data);
 
         return node;
       }
@@ -139,7 +139,7 @@ class BinarySearchTree {
       node = node.left;
     }
 
-    return node.value;
+    return node.data;
   }
 
   max() {
@@ -153,7 +153,7 @@ class BinarySearchTree {
       node = node.right;
     }
 
-    return node.value;
+    return node.data;
   }
 }
 
